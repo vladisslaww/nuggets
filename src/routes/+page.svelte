@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
+  import { base } from '$app/paths';
   
   export let data: PageData;
 </script>
@@ -9,8 +10,10 @@
   <p class="description">Nuggets is my experiment in consistency. How long can I last putting out a short beat every day?</p>
   <div class="songs">
     {#each data.songs as song}
-      <a href="/player/{encodeURIComponent(song)}" class="song-link">
-        {song.replace('.flac', '')}
+      <a href="{base}/player/{encodeURIComponent(song)}" class="song-link">
+        <div class="song-item">
+          {song.replace('.flac', '')}
+        </div>
       </a>
     {/each}
   </div>

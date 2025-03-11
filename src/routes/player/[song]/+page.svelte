@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import type { PageData } from './$types';
   import AudioPlayer from '$lib/components/AudioPlayer.svelte';
   
@@ -6,15 +7,16 @@
 </script>
 
 <svelte:head>
+  <title>{data.song.replace('.flac', '')} - Nuggets</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </svelte:head>
 
 <div class="player-page">
-  <a href="/" class="back-button">← Back to Songs</a>
+  <a href="{base}/" class="back-button">← Back to Songs</a>
   <h1>{data.song.replace('.flac', '')}</h1>
-  <AudioPlayer songPath={`/audio/${data.song}`} />
+  <AudioPlayer songPath={`${base}/audio/${data.song}`} />
 </div>
 
 <style>
