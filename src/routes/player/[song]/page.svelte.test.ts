@@ -26,7 +26,7 @@ describe('Player Page', () => {
     const mockSong = '03.03.2025.flac';
     const { container } = render(Page, {
       props: {
-        data: { song: mockSong }
+        data: { song: mockSong, prev: null, next: null }
       }
     });
 
@@ -42,5 +42,28 @@ describe('Player Page', () => {
     const audioPlayer = container.querySelector('audio');
     expect(audioPlayer).toBeInTheDocument();
     expect(audioPlayer?.getAttribute('src')).toBe(`/audio/${mockSong}`);
+  });
+
+  it('links to the previous and next songs', () => {
+    const { container } = render(Page, {
+      props: {
+        data: { song: '2025.03.08.flac', prev: '2025.03.09.flac', next: '2025.03.07.flac' }
+      }
+    });
+
+    expect(container.querySelector('.prev-button')?.getAttribute('href')).toBe('/player/2025.03.09.flac');
+    expect(container.querySelector('.next-button')?.getAttribute('href')).toBe('/player/2025.03.07.flac');
+  });
+
+  it('disables prev/next at the ends of the list', () => {
+    const { container } = render(Page, {
+      props: {
+        data: { song: '2025.03.08.flac', prev: null, next: null }
+      }
+    });
+
+    expect(container.querySelector('.prev-button')).toBeNull();
+    expect(container.querySelector('.next-button')).toBeNull();
+    expect(container.querySelectorAll('.nav-button.disabled')).toHaveLength(2);
   });
 }); 
